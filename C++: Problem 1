@@ -1,0 +1,54 @@
+#include <iostream>
+
+using namespace std;
+
+int main() {
+    int N, K;
+    cin >> N >> K;
+
+    int list_astronot[1005];
+    for (int i = 0; i < N; i++) {
+        list_astronot[i] = i + 1;
+    }
+
+    int jumlah_sisa = N;
+    int index_sekarang = 0;
+
+    while (jumlah_sisa > 1) {
+        int langkah_dihitung = 0;
+        while (langkah_dihitung < K) {
+            if (list_astronot[index_sekarang] != 0) {
+                langkah_dihitung++;
+                if (langkah_dihitung == K) {
+                    break;
+                }
+            }
+            index_sekarang = (index_sekarang + 1) % N;
+        }
+
+        int astronot_dieliminasi = list_astronot[index_sekarang];
+        list_astronot[index_sekarang] = 0;
+        jumlah_sisa--;
+
+        if (astronot_dieliminasi % 2 == 0) {
+            K += 2;
+        } else {
+            K -= 1;
+        }
+
+        if (K < 2) {
+            K = 2;
+        }
+
+        index_sekarang = (index_sekarang + 1) % N;
+    }
+
+    for (int i = 0; i < N; i++) {
+        if (list_astronot[i] != 0) {
+            cout << list_astronot[i] << endl;
+            break;
+        }
+    }
+
+    return 0;
+}
