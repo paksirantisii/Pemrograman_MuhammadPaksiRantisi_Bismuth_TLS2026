@@ -1,0 +1,42 @@
+PROGRAM simulasi_eliminasi_astronot
+
+DECLARE
+    N, K : integer
+    list_astronot : array of integer
+    index_sekarang : integer
+    astronot_dieliminasi : integer
+
+BEGIN
+    GET N
+    GET K
+
+    FOR i FROM 1 UNTIL N
+        list_astronot[i] = i
+    END FOR
+
+    index_sekarang = 0
+
+    WHILE length(list_astronot) > 1
+        index_sekarang = (index_sekarang + K - 1) MOD length(list_astronot)
+
+        astronot_dieliminasi = list_astronot[index_sekarang]
+        PRINT "Astronot yang dieliminasi: ", astronot_dieliminasi
+
+        Hapus_Dari_List(list_astronot, index_sekarang)
+
+        IF (astronot_dieliminasi MOD 2 == 0) THEN
+            K = K + 2
+        ELSE
+            K = K - 1
+        END IF
+
+        IF (K < 2) THEN
+            K = 2
+        END IF
+    END WHILE
+
+    PRINT "Astronot terakhir yang bertahan adalah: ", list_astronot[0]
+
+END
+
+```
