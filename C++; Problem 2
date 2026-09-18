@@ -1,0 +1,35 @@
+#include <iostream>
+
+using namespace std;
+
+int main() {
+    char pesan[105];
+    cin >> pesan;
+
+    int nilai_sebelumnya = 0;
+    int i = 0;
+
+    while (pesan[i] != '\0') {
+        int nilai_sekarang = pesan[i] - 'A' + 1;
+        int nilai_baru;
+
+        if (i == 0) {
+            nilai_baru = nilai_sekarang;
+        } else {
+            nilai_baru = nilai_sekarang + nilai_sebelumnya;
+
+            while (nilai_baru > 26) {
+                nilai_baru -= 26;
+            }
+        }
+
+        char karakter_baru = (char)(nilai_baru + 'A' - 1);
+        cout << karakter_baru;
+
+        nilai_sebelumnya = nilai_sekarang;
+        i++;
+    }
+    cout << endl;
+
+    return 0;
+}
