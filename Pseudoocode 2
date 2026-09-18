@@ -1,0 +1,46 @@
+PROGRAM enkripsi_sandi_alien
+
+DECLARE
+    pesan : string
+    pesan_terSandi : string
+    panjang_pesan, i : integer
+    nilai_sekarang, nilai_sebelumnya, nilai_baru : integer
+    karakter_baru : char
+
+BEGIN
+    GET pesan
+    
+    panjang_pesan = length(pesan)
+    pesan_terSandi = ""
+    nilai_sebelumnya = 0  // Karakter pertama tidak mengalami perubahan (pergeseran 0)
+
+    FOR i FROM 1 UNTIL panjang_pesan
+        // Mengambil nilai posisi huruf dalam alfabet (A=1, B=2, ..., Z=26)
+        // Fungsi ord(char) mengembalikan nilai ASCII/numerik huruf kapital
+        nilai_sekarang = ord(pesan[i]) - 64
+
+        IF i == 1 THEN
+            nilai_baru = nilai_sekarang
+        ELSE
+            // Huruf berikutnya digeser sebanyak nilai dari huruf sebelumnya
+            nilai_baru = nilai_sekarang + nilai_sebelumnya
+
+            // Jika hasil pergeseran melewati Z (lebih dari 26), perhitungan kembali dari A
+            WHILE nilai_baru > 26
+                nilai_baru = nilai_baru - 26
+            END WHILE
+        END IF
+
+        // Mengubah kembali nilai numerik menjadi karakter huruf
+        karakter_baru = char(nilai_baru + 64)
+        
+        // Menambahkan karakter ke pesan tersandi
+        pesan_terSandi = pesan_terSandi + karakter_baru
+
+        // Perbarui nilai sebelumnya untuk iterasi berikutnya
+        nilai_sebelumnya = nilai_sekarang
+    END FOR
+
+    PRINT "Pesan tersandi: ", pesan_terSandi
+
+END
